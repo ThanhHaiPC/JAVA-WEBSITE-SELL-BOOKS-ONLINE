@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Remove Item</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <h1>Remove Item from Cart</h1>
+    <p>Book: <!-- Hiển thị thông tin sách --></p>
+    <p>Quantity: <!-- Hiển thị số lượng --></p>
+    <form action="/api/cart/{cartId}/removeItem/{cartItemId}" method="delete">
+        <button type="submit">Remove Item</button>
+    </form>
+</body>
+</html>
