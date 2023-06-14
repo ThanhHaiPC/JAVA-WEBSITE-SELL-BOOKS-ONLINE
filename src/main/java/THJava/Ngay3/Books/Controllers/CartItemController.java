@@ -1,25 +1,70 @@
 package THJava.Ngay3.Books.Controllers;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import THJava.Ngay3.Books.Models.Book;
 import THJava.Ngay3.Books.Models.CartItem;
+import THJava.Ngay3.Books.Services.BookServices;
 import THJava.Ngay3.Books.Services.CartItemService;
+import THJava.Ngay3.Books.Utils.FileUploadUtil;
 
-@RestController
-@RequestMapping("/api/cartItems")
+@Controller
 public class CartItemController {
-
-    private final CartItemService cartItemService;
+    @Autowired
+    private CartItemService cartItemService;
 
     @Autowired
-    public CartItemController(CartItemService cartItemService) {
-        this.cartItemService = cartItemService;
+    private BookServices bookService;
+
+    @GetMapping("/cart")
+    public String viewCart(Model model) {
+        List<CartItem> cartItems = cartItemService.getCartItems();
+        Long totalPrice = cartItemService.getTotalPrice();
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("cartItemCount", cartItems.size());
+        return "book/cart";
     }
 
-    @GetMapping("/{cartItemId}")
-    public CartItem getCartItemById(@PathVariable Long cartItemId) {
-        return cartItemService.getCartItemById(cartItemId);
+    @PostMapping("/save")
+    public String saveBook(@ModelAttribute("book") Book book, @RequestParam("image") MultipartFile multipartFile)
+            throws IOException {
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        book.setPhotourl(fileName);
+        Book savedBook = bookService.save(book);
+        if (!multipartFile.isEmpty()) {
+            String uploadDir = "photos/" + savedBook.getId();
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
+        return "redirect:/cart";
     }
 
-    // Other controller methods for cart items
+    @PostMapping("/cart/add")
+    public String addToCart(@RequestParam("productId") Long productId, @RequestParam("quantity") int quantity) {
+        Book product = bookService.get(productId);
+        if (product != null) {
+            cartItemService.addToCart(product, quantity);
+        }
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/cart/remove/{productId}")
+    public String removeFromCart(@PathVariable Long productId) {
+        cartItemService.removeFromCart(productId);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/cart/update/{productId}")
+    public String updateCartItem(@PathVariable Long productId, @RequestParam("quantity") int quantity) {
+        cartItemService.updateQuantity(productId, quantity);
+        return "redirect:/cart";
+    }
 }

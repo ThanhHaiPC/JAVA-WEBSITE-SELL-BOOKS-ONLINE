@@ -56,8 +56,7 @@
 					<td th:text="${book.title}">Title</td>
 					<td th:text="${book.author}">Author</td>
 					<td th:text="${book.price}">Price</td>
-					<td><img class="img-thumbnail"				
-						th:src="@{${book.photourl}}" /></td>
+					<td><img class="img-thumbnail" th:src="@{${book.photourl}}" /></td>
 					<td th:text="${book.category.name}">Category</td>
 					<td>
 						<div sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
@@ -66,6 +65,11 @@
 						<div sec:authorize="hasAuthority('ADMIN')">
 							<a th:href="@{'/books/delete/' + ${book.id}}">Delete</a>
 						</div>
+						<form th:action="@{/cart/add}" method="post">
+    						<input type="hidden" name="productId" th:value="${book.id}" />
+    						<input type="number" name="quantity" min="1" value="1" />
+    						<button type="submit" class="btn btn-sm btn-danger">Add to Cart</button>
+						</form>
 					</td>
 				</tr>
 			</tbody>
