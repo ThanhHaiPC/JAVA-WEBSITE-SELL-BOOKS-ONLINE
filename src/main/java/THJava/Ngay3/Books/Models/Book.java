@@ -1,5 +1,7 @@
 package THJava.Ngay3.Books.Models;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,9 +23,9 @@ public class Book {
 	@Column(name = "author",nullable = false,length = 255)
 	private String author;
 	@Column(name = "price")
-	private Long price;
+	private BigDecimal price;
 	private boolean isdeleted;
-	public Book(Long id, String title, String author, Long price, boolean isdeleted, Category category,
+	public Book(Long id, String title, String author, BigDecimal  price, boolean isdeleted, Category category,
 			String photourl) {
 		super();
 		this.id = id;
@@ -72,11 +74,11 @@ public class Book {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public Long getPrice() {
+	public BigDecimal  getPrice() {
 		return price;
 	}
-	public void setPrice(Long price) {
-		this.price = price;
+	public void setPrice(BigDecimal    l) {
+		this.price = l;
 	}
 	public Category getCategory() {
 		return category;
@@ -88,7 +90,7 @@ public class Book {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Book(Long id, String title, String author, Long price, Category category) {
+	public Book(Long id, String title, String author, BigDecimal  price, Category category) {
 		super();
 		this.id = id;
 		this.title = title;

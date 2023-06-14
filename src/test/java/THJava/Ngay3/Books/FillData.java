@@ -3,6 +3,8 @@ package THJava.Ngay3.Books;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -50,28 +52,28 @@ public class FillData {
 		Book bookCNTT1 = new Book();
 		bookCNTT1.setTitle("Lap trinh web spring MVC");
 		bookCNTT1.setAuthor("Anh Nguyen");
-		bookCNTT1.setPrice((long) 500001);
+		bookCNTT1.setPrice(BigDecimal.valueOf(500001));
 		bookCNTT1.setCategory(categoryCNTT);
 		bookRepository.save(bookCNTT1);
 		
 		Book bookCNTT2 = new Book();
 		bookCNTT2.setTitle("Lap trinh Ung dung Spring");
 		bookCNTT2.setAuthor("Anh Nguyen");
-		bookCNTT2.setPrice((long) 1500001);
+		bookCNTT2.setPrice(BigDecimal.valueOf(1500001));
 		bookCNTT2.setCategory(categoryCNTT);
 		bookRepository.save(bookCNTT2);
 		
 		Book bookCNTT3 = new Book();
 		bookCNTT3.setTitle("Lap trinh ung dung java");
 		bookCNTT3.setAuthor("Anh Nguyen");
-		bookCNTT3.setPrice((long) 2500001);
+		bookCNTT3.setPrice(BigDecimal.valueOf(2500001));
 		bookCNTT3.setCategory(categoryCNTT);
 		bookRepository.save(bookCNTT3);
 		
 		Book bookEng1 = new Book();
 		bookEng1.setTitle("IELTS");
 		bookEng1.setAuthor("Cambridge");
-		bookEng1.setPrice((long) 3500001);
+		bookEng1.setPrice(BigDecimal.valueOf(3500001));
 		bookEng1.setCategory(categoryEng);
 		bookRepository.save(bookEng1);
 		

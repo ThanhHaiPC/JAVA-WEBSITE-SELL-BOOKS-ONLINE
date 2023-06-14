@@ -1,59 +1,75 @@
 package THJava.Ngay3.Books.Services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import THJava.Ngay3.Books.Models.Book;
 import THJava.Ngay3.Books.Models.CartItem;
+import THJava.Ngay3.Books.Models.User;
+import THJava.Ngay3.Books.Repositories.CartItemRepository;
 
 @Service
 public class CartItemService {
-    private Map<Long, CartItem> cartItems = new HashMap<>();
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
-    public void addToCart(Book product, int quantity) {
-        CartItem cartItem = cartItems.get(product.getId());
+    @Transactional
+    public void addToCart(User user, Book book, int quantity) {
+        CartItem cartItem = cartItemRepository.findByUserIdAndBookId(user.getId(), book.getId());
+
         if (cartItem != null) {
             int newQuantity = cartItem.getQuantity() + quantity;
+            BigDecimal newTotal = book.getPrice().multiply(BigDecimal.valueOf(newQuantity));
             cartItem.setQuantity(newQuantity);
-            cartItem.setTotal(cartItem.getPrice() * newQuantity);
+            cartItem.setTotal(newTotal);
         } else {
             cartItem = new CartItem();
-            cartItem.setId(product.getId());
-            cartItem.setName(product.getTitle());
-            cartItem.setBrand(product.getAuthor());
-            cartItem.setPrice(product.getPrice());
+            cartItem.setUserId(user.getId());
+            cartItem.setName(book.getTitle());
+            cartItem.setBrand(book.getAuthor());
+            cartItem.setPrice(book.getPrice()); // Assuming book.getPrice() returns a BigDecimal
             cartItem.setQuantity(quantity);
-            cartItem.setImageUrl(product.getPhotourl());
-            cartItem.setTotal(product.getPrice() * quantity);
-            cartItems.put(product.getId(), cartItem);
+            cartItem.setImageUrl(book.getPhotourl());
+            cartItem.setTotal(book.getPrice().multiply(BigDecimal.valueOf(quantity)));
+            cartItem.setBookId(book.getId());
+            cartItemRepository.save(cartItem);
         }
     }
 
-    public void removeFromCart(Long productId) {
-        cartItems.remove(productId);
+
+    public void removeFromCart(Long cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
     }
 
-    public void updateQuantity(Long productId, int quantity) {
-        CartItem cartItem = cartItems.get(productId);
+    public void updateQuantity(Long cartItemId, int quantity) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElse(null);
         if (cartItem != null) {
+            BigDecimal newTotal = cartItem.getPrice().multiply(BigDecimal.valueOf(quantity));
             cartItem.setQuantity(quantity);
-            cartItem.setTotal(cartItem.getPrice() * quantity);
+            cartItem.setTotal(newTotal);
+            cartItemRepository.save(cartItem);
         }
     }
 
-    public List<CartItem> getCartItems() {
-        return new ArrayList<>(cartItems.values());
-    }
-
-    public Long getTotalPrice() {
-        Long totalPrice = 0L;
-        for (CartItem cartItem : cartItems.values()) {
-            totalPrice += cartItem.getTotal();
+    public BigDecimal getTotalPrice(List<CartItem> cartItems) {
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        for (CartItem cartItem : cartItems) {
+            totalPrice = totalPrice.add(cartItem.getTotal());
         }
         return totalPrice;
+    }
+
+    public CartItem save(CartItem cartItem) {
+        return cartItemRepository.save(cartItem);
+    }
+
+    @Transactional
+    public List<CartItem> getCartItems(User user) {
+        return cartItemRepository.findByUserId(user.getId());
     }
 }
