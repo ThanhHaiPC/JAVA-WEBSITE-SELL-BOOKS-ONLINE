@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Registration Success</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
-</head>
-<body>
-    <div class="container text-center">
-        <h3>You have signed up successfully!</h3>
-        <h4><a th:href="@{/login}">Click here to Login</a></h4>
-    </div>
-     
-</body>
-</html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+	<div class="row text-center">
+        <div class="col-sm-6 col-sm-offset-3">
+        <br><br> <h2 style="color:#0fad00">Register Success</h2>       
+        <p style="font-size:20px;color:#5C5C5C;">Thank you for register.We have sent you an email with your details
+. Please go to your above email now and login.</p>
+        <a th:href="@{/login}" class="btn btn-success">     Log in      </a>
+    <br><br>
+        </div>       
+	</div>
+</div>
