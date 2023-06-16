@@ -1,36 +1,38 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<title>Login</title>
-<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-</head>
+ <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="/src/main/resources/templates/auth/Login.css" rel="stylesheet" type="text/css"/>
+<!------ Include the above in your HEAD tag ---------->
+
 <body>
-	<div class="container">
-		<h2 class="form-signin-heading">Login</h2>
-		<div th:if="${param.error}" class="alert alert-danger">Invalid
-			username and password.</div>
-		<div th:if="${param.logout}" class="alert alert-success">You
-			have been logged out.</div>
-		<form class="form-signin" method="POST" th:action="@{/login}">
-			<p>
-				<label for="username" class="sr-only">Username</label> <input
-					type="text" id="username" name="username" class="form-control"
-					placeholder="Username" required autofocus>
-			</p>
-			<p>
-				<label for="password" class="sr-only">Password</label> <input
-					type="password" id="password" name="password" class="form-control"
-					placeholder="Password" required>
-			</p>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-			<a th:href="@{/forgot_password}">Forgot your password?</a>
-			<a th:href="@{/signup}">Don't have account</a>
-		</form>
-	</div>
+    <div id="login">
+        <h3 class="text-center text-white pt-5">Login form</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" method="POST" th:action="@{/login}">
+                            <h3 class="text-center text-info">Login</h3>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Username:</label><br>
+					<input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Password:</label>
+                                <br>
+					<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>                            </div>
+                            <div class="form-group">
+                                <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+								<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+								<a th:href="@{/forgot_password}">Forgot your password?</a>
+							 	<a th:href="@{/signup}" class="text-info">Register here</a>
+								
+                            <div id="register-link" class="text-right">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-</html>
+      
