@@ -21,7 +21,7 @@ public class CartItemService {
     @Transactional
     public void addToCart(User user, Book book, int quantity) {
         CartItem cartItem = cartItemRepository.findByUserIdAndBookId(user.getId(), book.getId());
-
+//qwqerqwer
         if (cartItem != null) {
             int newQuantity = cartItem.getQuantity() + quantity;
             BigDecimal newTotal = book.getPrice().multiply(BigDecimal.valueOf(newQuantity));
