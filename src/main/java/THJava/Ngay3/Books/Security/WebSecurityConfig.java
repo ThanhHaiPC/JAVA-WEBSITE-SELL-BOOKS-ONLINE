@@ -44,6 +44,8 @@ public class WebSecurityConfig {
 	@Bean
 	protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		System.out.println("filter");
+		//rememberme
+		http.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(60);
 		http.authorizeHttpRequests(requests -> requests.antMatchers(
 				pathArrayPermitAll).permitAll()
 				.antMatchers(pathArrayView).hasAnyAuthority("USER", "CREATER", "EDITOR", "ADMIN")
