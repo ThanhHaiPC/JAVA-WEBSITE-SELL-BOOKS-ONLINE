@@ -1,6 +1,7 @@
 package THJava.Ngay3.Books.Controllers;
 
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
@@ -17,6 +18,7 @@ import THJava.Ngay3.Books.Models.CartItem;
 import THJava.Ngay3.Books.Models.User;
 import THJava.Ngay3.Books.Services.BookServices;
 import THJava.Ngay3.Books.Services.CartItemService;
+import THJava.Ngay3.Books.Services.CheckOutservice;
 import THJava.Ngay3.Books.Services.UserService;
 import THJava.Ngay3.Books.Utils.FileUploadUtil;
 
@@ -77,5 +79,13 @@ public class CartItemController {
     public String updateCartItem(@PathVariable Long productId, @RequestParam("quantity") int quantity) {
         cartItemService.updateQuantity(productId, quantity);
         return "redirect:/cart";
+    }
+    
+    @PostMapping("/cart/checkout")
+    public String checkOut(@RequestParam("cartID") Long cartID) {
+    	CartItem cartItem = cartItemService.get(cartID);
+    	cartItemService.removeFromCart(cartID);
+    	cartItemService.checkOut(cartItem); 
+    	return "book/checkout";
     }
 }

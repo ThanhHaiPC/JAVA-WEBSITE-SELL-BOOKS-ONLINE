@@ -10,18 +10,21 @@ import org.springframework.stereotype.Service;
 
 import THJava.Ngay3.Books.Models.Book;
 import THJava.Ngay3.Books.Models.CartItem;
+import THJava.Ngay3.Books.Models.OrderDetal;
 import THJava.Ngay3.Books.Models.User;
 import THJava.Ngay3.Books.Repositories.CartItemRepository;
+import THJava.Ngay3.Books.Repositories.CheckOutRepository;
 
 @Service
 public class CartItemService {
     @Autowired
     private CartItemRepository cartItemRepository;
-
+    @Autowired
+    private CheckOutRepository checkOutRepository;
     @Transactional
     public void addToCart(User user, Book book, int quantity) {
         CartItem cartItem = cartItemRepository.findByUserIdAndBookId(user.getId(), book.getId());
-//qwqerqwer
+       
         if (cartItem != null) {
             int newQuantity = cartItem.getQuantity() + quantity;
             BigDecimal newTotal = book.getPrice().multiply(BigDecimal.valueOf(newQuantity));
@@ -36,7 +39,9 @@ public class CartItemService {
             cartItem.setQuantity(quantity);
             cartItem.setImageUrl(book.getPhotourl());
             cartItem.setTotal(book.getPrice().multiply(BigDecimal.valueOf(quantity)));
-            cartItem.setBookId(book.getId());
+            cartItem.setBookId(book.getId());   
+            
+          
             cartItemRepository.save(cartItem);
         }
     }
@@ -67,9 +72,22 @@ public class CartItemService {
     public CartItem save(CartItem cartItem) {
         return cartItemRepository.save(cartItem);
     }
-
-    @Transactional
+    
+    public CartItem get(Long id) {
+		return cartItemRepository.findById(id).get();
+	}
     public List<CartItem> getCartItems(User user) {
         return cartItemRepository.findByUserId(user.getId());
+    }
+    
+    @Transactional
+    public void checkOut(CartItem cartItem) {
+    	
+    	OrderDetal orderDetal = new OrderDetal();
+        orderDetal.setBookId(cartItem.getBookId());
+        orderDetal.setUserId(cartItem.getUserId());
+        orderDetal.setQuantity(cartItem.getQuantity());	        
+        orderDetal.setTotal(cartItem.getTotal());
+        checkOutRepository.save(orderDetal);
     }
 }
