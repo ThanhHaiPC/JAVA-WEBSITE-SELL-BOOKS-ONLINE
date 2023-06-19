@@ -21,7 +21,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					
 					<th>Title</th>
 					<th>Author</th>
 					<th>Price</th>
@@ -32,8 +31,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="cartItem : ${cartItems}" ,th:each="book : ${books}">
-					
+				<tr th:each="cartItem : ${cartItems}">
 					<td th:text="${cartItem.name}"></td>
 					<td th:text="${cartItem.brand}"></td>
 					<td th:text="${cartItem.price}"></td>
@@ -52,14 +50,14 @@
 					<td th:text="${cartItem.total}"></td>
 					<td><a href="#" th:href="@{'/cart/remove/' + ${cartItem.id}}"
 						class="btn btn-sm btn-danger">Remove</a></td>
-					<form th:action="@{/cart/checkout}" method="post">
-						<input type="hidden" name="cartID" th:value="${cartItem.id}" />
-						<button type="submit" class="btn btn-sm btn-danger">Dat
-							Hang</button>
-					</form>
 				</tr>
 			</tbody>
 		</table>
+
+		<form th:action="@{/cart/checkout}" method="post">
+			<input type="hidden" name="cartID" th:value="${cartItems[0].id}" />
+			<button type="submit" class="btn btn-sm btn-danger">Đặt Hàng</button>
+		</form>
 
 		<div class="text-end">
 			<p>
@@ -67,7 +65,6 @@
 			</p>
 		</div>
 		<br>
-
 	</div>
 </body>
 </html>
