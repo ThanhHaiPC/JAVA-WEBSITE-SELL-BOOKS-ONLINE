@@ -19,7 +19,7 @@ public class CategoryService {
 	public List<Category> listAll() {
 		return categoryRepository.findAll();
 	}
-//asdfasdf
+
 	public void save(Category category) {
 		categoryRepository.save(category);
 	}
