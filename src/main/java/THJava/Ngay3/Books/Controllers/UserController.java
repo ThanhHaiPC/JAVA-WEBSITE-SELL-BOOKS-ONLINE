@@ -1,6 +1,7 @@
 package THJava.Ngay3.Books.Controllers;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StringUtils;
 
+import THJava.Ngay3.Books.Models.CartItem;
 import THJava.Ngay3.Books.Models.User;
+import THJava.Ngay3.Books.Services.CartItemService;
 import THJava.Ngay3.Books.Services.RoleService;
 import THJava.Ngay3.Books.Services.UserService;
 import THJava.Ngay3.Books.Utils.FileUploadUtil;
@@ -32,10 +35,17 @@ public class UserController {
 	private RoleService roleService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private CartItemService cartItemService;
+	
 	@GetMapping
-	public String viewAllUser(Model model) {
+	public String viewAllUser(Model model,Principal principal) {
 		List<User> listUsers = userService.listAll();
 		model.addAttribute("users", listUsers);
+		String username = principal.getName();
+        User user = userService.findByUsername(username);
+        List<CartItem> cartItems = cartItemService.getCartItems(user);
+        model.addAttribute("count", cartItems.size());
 		return "user/index";
 	}
 	

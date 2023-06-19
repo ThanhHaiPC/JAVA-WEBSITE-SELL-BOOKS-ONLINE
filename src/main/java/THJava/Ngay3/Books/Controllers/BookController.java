@@ -1,6 +1,7 @@
 package THJava.Ngay3.Books.Controllers;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +30,12 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import THJava.Ngay3.Books.Models.Book;
+import THJava.Ngay3.Books.Models.CartItem;
 import THJava.Ngay3.Books.Models.User;
 import THJava.Ngay3.Books.Services.BookServices;
+import THJava.Ngay3.Books.Services.CartItemService;
 import THJava.Ngay3.Books.Services.CategoryService;
+import THJava.Ngay3.Books.Services.UserService;
 import THJava.Ngay3.Books.Utils.FileUploadUtil;
 
 import java.text.DateFormat;
@@ -43,9 +47,16 @@ import java.text.SimpleDateFormat;
 public class BookController {
 	@Autowired
 	private BookServices bookServices;
-	
+	@Autowired
+	private CartItemService cartItemService;
+	@Autowired
+	private UserService userService;
 	@GetMapping
-	public String viewHomePage(Model model) {
+	public String viewHomePage(Model model,Principal principal) {
+		String username = principal.getName();
+        User user = userService.findByUsername(username);
+        List<CartItem> cartItems = cartItemService.getCartItems(user);
+        model.addAttribute("count", cartItems.size());
 		return viewAllBook(model, 1, "id", "asc", " ");
 	}
 	@GetMapping("/page/{pageNum}")
@@ -64,6 +75,7 @@ public class BookController {
 		model.addAttribute("reverseSortType", sortType.equals("asc") ? "desc" : "asc");
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("books", listBook);
+		
 		return "book/index";
 	}
 	@Autowired

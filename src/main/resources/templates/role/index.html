@@ -10,6 +10,7 @@
 <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 <script type="text/javascript"
 	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -35,10 +36,10 @@
 					<td th:text="${role.name}">Name</td>
 					<td>
 						<div sec:authorize="hasAnyAuthority('ADMIN')">
-							<a th:href="@{'/roles/edit/' + ${role.id}}">Edit</a>
+							<a th:href="@{'/roles/edit/' + ${role.id}}"><i class="fa fa-pen"></i></a>
 						</div>
 						<div sec:authorize="hasAuthority('ADMIN')">
-							<a th:href="@{'/roles/delete/' + ${role.id}}">Delete</a>
+							<a th:href="@{'/roles/delete/' + ${role.id}}"><i class="fa fa-trash"></i></a>
 						</div>
 					</td>
 				</tr>

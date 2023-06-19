@@ -40,6 +40,7 @@ public class CartItemController {
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cartItemCount", cartItems.size());
+        model.addAttribute("count", cartItems.size());
         return "book/cart";
     }
 
