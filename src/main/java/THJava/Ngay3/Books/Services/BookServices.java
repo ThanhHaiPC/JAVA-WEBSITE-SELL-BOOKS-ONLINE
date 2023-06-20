@@ -18,7 +18,7 @@ import THJava.Ngay3.Books.Repositories.BookRepository;
 @Service
 @Transactional
 public class BookServices {
-	int pageSize = 10;
+	int pageSize = 5;
 	@Autowired
 	private BookRepository bookRepository;
 	public Page<Book> listAll(int pageNum) {
