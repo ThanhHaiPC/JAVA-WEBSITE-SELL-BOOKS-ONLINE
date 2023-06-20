@@ -22,7 +22,9 @@ public class WebSecurityConfig {
 	String[] pathArrayNew = new String[] { "/books/new" };
 	String[] pathArrayDelete = new String[] { "/books/edit/**" };
 	String[] pathArrayUpdate = new String[] { "/books/delete/**" };
-
+	String[] pathArrayRoleStrings = new String[] {"/roles/"};
+	String[] pathArrayUserStrings = new String[] {"/users/"};
+	
 	@Bean
 	protected BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -48,6 +50,8 @@ public class WebSecurityConfig {
 		http.rememberMe().key("uniqueAndSecret").tokenValiditySeconds(10000000);
 		http.authorizeHttpRequests(requests -> requests.antMatchers(
 				pathArrayPermitAll).permitAll()
+				.antMatchers(pathArrayRoleStrings).hasAnyAuthority("ADMIN","CREATE","EDITOR")
+				.antMatchers(pathArrayUserStrings).hasAnyAuthority("ADMIN","CREATE","EDITOR")
 				.antMatchers(pathArrayView).hasAnyAuthority("USER", "CREATER", "EDITOR", "ADMIN")
 				.antMatchers(pathArrayUpdate).hasAnyAuthority("ADMIN", "CREATER")
 				.antMatchers(pathArrayUpdate).hasAnyAuthority("ADMIN", "EDITOR")

@@ -126,7 +126,7 @@ public class BookController {
 			return "not-found";
 		}else {
 			bookServices.delete(id);
-			return "redirect:/";
+			return "redirect:/books";
 		}
 		
 	}
