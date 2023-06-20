@@ -1,5 +1,6 @@
 package THJava.Ngay3.Books.Services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -38,6 +39,8 @@ public class UserService {
 		User user = userRepository.getUserByEmail(email);
 		if (user != null) {
 			user.settokenforgotpassword(token);
+			LocalDateTime nowDateTime =LocalDateTime.now();
+			LocalDateTime newDateTime =nowDateTime.plusSeconds(50);
 			user.setTimeexpired(null);
 			userRepository.save(user);
 		} else {
