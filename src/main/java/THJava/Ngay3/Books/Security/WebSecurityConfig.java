@@ -17,7 +17,7 @@ import THJava.Ngay3.Books.Services.UserDetailsServiceImpl;
 public class WebSecurityConfig {
 
 	String[] pathArrayPermitAll = new String[] { "/", "/webjars/**",
-			"/forgot_password", "/reset_password", "/signup","/verify/**", "/process_register" };
+			"/forgot_password", "/reset_password", "/signup","/verify/**", "/process_register","/photos/**" };
 	String[] pathArrayView = new String[] { "/books/" };
 	String[] pathArrayNew = new String[] { "/books/new" };
 	String[] pathArrayDelete = new String[] { "/books/edit/**" };
