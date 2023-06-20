@@ -23,14 +23,15 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3 col-lg-3 " align="center"><img class="img-circle img-responsive" th:src="@{${PHOTO}}" /> </div>
+                        <div class="col-md-3 col-lg-3 " align="center">
+                        
+                    <img th:src="@{S{PHOTO}}" style = "width:100px; height :100px "/>
+                        </div>
 						
 
                         <div class=" col-md-9 col-lg-9 ">
                             <table class="table table-user-information">
                                 <tbody>
-
-
                                     <tr>
                                         <td>ID</td>
                                         <td th:text="${ID}"></td>

@@ -14,10 +14,17 @@
 </head>
 <style>
 body {
-  background-image: url("https://media.istockphoto.com/id/1203011577/vector/newspaper-with-old-grunge-vintage-unreadable-paper-texture-background.jpg?s=2048x2048&w=is&k=20&c=bw_YpfdvRcApDJvPonO0452tER4rarC-mfMoBuKho_E=");
+ /*  background-image: url("https://media.istockphoto.com/id/1203011577/vector/newspaper-with-old-grunge-vintage-unreadable-paper-texture-background.jpg?s=2048x2048&w=is&k=20&c=bw_YpfdvRcApDJvPonO0452tER4rarC-mfMoBuKho_E=");
   background-color: #ccc;
-  backdrop-filter: blur(5px) brightness(1.0);
+  backdrop-filter: blur(5px) brightness(1.0); */
+  background: linear-gradient(to right, rgb(221, 214, 243), rgb(250, 172, 168));
 }
+.img-thumbnail   {
+    max-width: 100px; /* Adjust the maximum width of the image */
+    max-height: 100px; /* Adjust the maximum height of the image */
+    width: 200px;
+    height: 100px;
+  }
 </style>
 <body>
 	<header th:insert="layout/fragment.html :: header"></header>
@@ -63,12 +70,12 @@ body {
 
 		<form th:action="@{/cart/checkout}" method="post">
 			<input type="hidden" name="cartID" th:value="${cartItems[0].id}" />
-			<button type="submit" class="btn btn-sm btn-danger">Đặt Hàng</button>
+			<button type="submit" class="btn btn-sm btn-success" style="width:200px;height: 50px" >Đặt Hàng</button>
 		</form>
 
 		<div class="text-end">
-			<p>
-				Total Price: <span th:text="${totalPrice}"></span>
+			<p style = "font-family:courier,arial,helvetica;font-weight: bold ;font-size: 20px">
+				Total Price: <span th:text="${totalPrice} "style="color: Black; font-weight: bold"></span>
 			</p>
 		</div>
 		<br>
