@@ -168,4 +168,34 @@ public class AuthController {
 		return "auth/inforUser";
 	}
 	
+	
+	
+	
+	@GetMapping("/change_password")
+	public String changePasswordForm(Model model,Principal principal) {
+		String username = principal.getName();
+        User user = userService.findByUsername(username);				
+		return "auth/change_password_form";
+	}
+
+	@PostMapping("/change_password")
+	public String processChangePassword(HttpServletRequest request, Model model,Principal principal) {
+		
+		String password = request.getParameter("password");
+
+		String username = principal.getName();
+        User user = userService.findByUsername(username);
+		model.addAttribute("title", "Reset your password");
+		if (user == null) {
+			model.addAttribute("message", "Invalid Token");
+			return "message";
+		} else {
+			userService.updatePassword(user, password);
+
+			model.addAttribute("message", "You have successfully changed your password.");
+		}
+
+		return "auth/change_password_form";
+	}
+	
 }
