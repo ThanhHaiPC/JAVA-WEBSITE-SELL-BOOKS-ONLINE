@@ -1,6 +1,8 @@
 package THJava.Ngay3.Books.Controllers;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 import javax.mail.MessagingException;
@@ -16,8 +18,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import THJava.Ngay3.Books.Services.SendMailService;
 import THJava.Ngay3.Books.Exception.UserNotFoundException;
@@ -25,6 +32,7 @@ import THJava.Ngay3.Books.Models.CustomUserDetails;
 import THJava.Ngay3.Books.Models.User;
 import THJava.Ngay3.Books.Services.RoleService;
 import THJava.Ngay3.Books.Services.UserService;
+import THJava.Ngay3.Books.Utils.FileUploadUtil;
 import THJava.Ngay3.Books.Utils.Utilities;
 import net.bytebuddy.utility.RandomString;
 @Controller
@@ -148,4 +156,16 @@ public class AuthController {
 		}
 		return "auth/result_Verify_form";
 	}
+	@GetMapping("/account")
+	public String inforUser(Model model,Principal principal) {	
+		String username = principal.getName();
+        User user = userService.findByUsername(username);
+        model.addAttribute("USERNAME", user.getUsername());
+        model.addAttribute("EMAIL", user.getEmail());
+        model.addAttribute("ID", user.getId());
+        model.addAttribute("PHOTO", user.getphotourl());
+        model.addAttribute("ROLE", user.getRoles());
+		return "auth/inforUser";
+	}
+	
 }

@@ -41,6 +41,8 @@ public class CartItemController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cartItemCount", cartItems.size());
         model.addAttribute("count", cartItems.size());
+        if(cartItems.size() == 0)
+        	return "book/cartEmpty";
         return "book/cart";
     }
 

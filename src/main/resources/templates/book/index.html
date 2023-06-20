@@ -12,6 +12,162 @@
 	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
+<style>
+body {
+  background-image: url("https://media.istockphoto.com/id/1203011577/vector/newspaper-with-old-grunge-vintage-unreadable-paper-texture-background.jpg?s=2048x2048&w=is&k=20&c=bw_YpfdvRcApDJvPonO0452tER4rarC-mfMoBuKho_E=");
+  background-color: #ccc;
+  backdrop-filter: blur(5px) brightness(1.0);
+}
+.main-search-input-wrap {
+  margin-bottom: 20px;
+}
+
+.main-search-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-search-input-item {
+  margin-right: 10px;
+}
+
+.main-search-button {
+  background-color: #e83e8c;
+  color: #fff;
+  padding: 8px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+#btnClear {
+  background-color: #ddd;
+  color: #555;
+  padding: 8px 20px;
+  border: none;
+  cursor: pointer;
+  
+}
+.pagination-outer {
+  text-align: center;
+}
+
+.pagination {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.pagination li a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f2f2f2;
+  color: #333;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination li.active a {
+  background-color: #666;
+  color: #fff;
+}
+
+.pagination li a:hover {
+  background-color: #ddd;
+}
+
+.pagination li span {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f2f2f2;
+  color: #666;
+  border-radius: 3px;
+}
+
+h5 {
+  margin-top: 10px;
+  color: #333;
+}
+
+h5, a, span, th{
+  font-size: 20px;
+}
+.table-icons a {
+  color: #999;
+  margin-right: 5px;
+  text-decoration: none;
+}
+
+.table-icons a:hover {
+  color: #333;
+}
+
+/* Animation Effects */
+.table tr {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.pagination-group {
+  margin-right: 10px;
+}
+
+.pagination-link {
+  color: #333;
+  text-decoration: none;
+  margin: 0 5px;
+  transition: color 0.3s ease;
+}
+
+.pagination-link-active {
+  font-weight: bold;
+}
+
+.pagination-link:hover {
+  color: #f00; /* Change to your desired hover color */
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pagination-link-disabled {
+  color: #888;
+  cursor: not-allowed;
+}
+.image-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+.image-container img {
+	max-width: 100px; /* Adjust the max-width as per your preference */
+	max-height: 100px; /* Adjust the max-height as per your preference */
+}
+</style>
 
 <body>
 	<header th:insert="layout/fragment.html :: header"> </header>
@@ -21,19 +177,16 @@
 			<a class="btn btn-primary" href="/books/new">Create New Book</a>
 		</div>
 		<br />
+		<div class="main-search-input-wrap">
+   		 <form th:action="@{/books/page/__${currentPage}__?sortField=id&sortType=asc}" class="main-search-input fl-wrap">
+        <div class="main-search-input-item">
+          Filter: <input type="text" name="keyword" id="keyword" size="120" th:value="${keyword}" required >
+           	<button type="submit" class="main-search-button">Search</button>
+            <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+        </div>
+    	</form>
+	</div>
 		
-		<form
-			th:action="@{/books/page/__${currentPage}__?sortField=id&sortType=asc}">
-			Filter: <input type="text" name="keyword" id="keyword" size="50"
-				th:value="${keyword}" required /> &nbsp; 
-				
-				<input type="submit"
-					value="Search"  /> &nbsp;
-				
-				 
-				<input type="button" value="Clear"
-				id="btnClear" onclick="clearSearch()" />
-		</form>
 		
 		
 		<br />
@@ -64,7 +217,11 @@
 					<td style="text-align: center;" th:text="${book.title}">Title</td>
 					<td style="text-align: center;" th:text="${book.author}">Author</td>
 					<td style="text-align: center;" th:text="${book.price}">Price</td>
-					<td ><img class="img-thumbnail" th:src="@{${book.photourl}}" /></td>
+					<td style="text-align: center;">
+					<div class="image-container">
+    					<img class="img-thumbnail" th:src="@{${book.photourl}}" />
+  					</div>
+  					</td>
 					<td style="text-align: center;" th:text="${book.category.name}">Category</td>
 					<td>
 					<div style="margin-left: 70px">
@@ -87,27 +244,37 @@
 		</table>
 		<div>
 			<h5>Total Items: [[${totalItems}]]</h5>
-			<a th:if="${currentPage > 1}"
-				th:href="@{'/books/page/1?sortField='+${sortField}+'&sortType=' + ${sortType}}">First</a>
-			<span th:unless="${currentPage > 1}">First</span> <a
-				th:if="${currentPage > 1}"
-				th:href="@{'/books/page/' + ${currentPage - 1}+ '?sortField='+${sortField}+'&sortType=' + ${sortType}}">Previous</a>
-			<span th:unless="${currentPage > 1}">Previous</span> <span
-				th:each="i: ${#numbers.sequence(1, totalPages)}"> <a
-				th:if="${currentPage != i}"
-				th:href="@{'/books/page/' + ${i}+ '?sortField='+${sortField}+'&sortType=' + ${sortType}}">[[${i}]]</a>
-				<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;
-			</span> <a th:if="${currentPage < totalPages}"
-				th:href="@{'/books/page/' + ${currentPage + 1}+ '?sortField='+${sortField}+'&sortType=' + ${sortType}}">Next</a>
-			<span th:unless="${currentPage < totalPages}">Next</span> <a
-				th:if="${currentPage < totalPages}"
-				th:href="@{'/books/page/' + ${totalPages}+ '?sortField='+${sortField}+'&sortType=' + ${sortType}}">Last</a>
-			<span th:unless="${currentPage < totalPages}">Last</span>
-
-
-
-		</div>
-	</div>
+			<div class="pagination">
+			  <div class="pagination-group">
+			    <a th:if="${currentPage > 1}"
+			      th:href="@{'/books/page/1?sortField='+${sortField}+'&sortType=' + ${sortType}}"
+			      class="pagination-link">First</a>
+			    <span th:unless="${currentPage > 1}" class="pagination-link-disabled">First</span>
+			    <a th:if="${currentPage > 1}"
+			      th:href="@{'/books/page/' + ${currentPage - 1}+ '?sortField='+${sortField}+'&sortType=' + ${sortType}}"
+			      class="pagination-link">Previous</a>
+			    <span th:unless="${currentPage > 1}" class="pagination-link-disabled">Previous</span>
+			  </div>
+			  <div class="pagination-group">
+			    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+			      <a th:if="${currentPage != i}"
+			        th:href="@{'/books/page/' + ${i}+ '?sortField='+${sortField}+'&sortType=' + ${sortType}}"
+			        class="pagination-link">[[${i}]]</a>
+			      <span th:unless="${currentPage != i}" class="pagination-link-active">[[${i}]]</span> &nbsp;
+			    </span>
+			  </div>
+			  <div class="pagination-group">
+			    <a th:if="${currentPage < totalPages}"
+			      th:href="@{'/books/page/' + ${currentPage + 1}+ '?sortField='+${sortField}+'&sortType=' + ${sortType}}"
+			      class="pagination-link">Next</a>
+			    <span th:unless="${currentPage < totalPages}" class="pagination-link-disabled">Next</span>
+			    <a th:if="${currentPage < totalPages}"
+			      th:href="@{'/books/page/' + ${totalPages}+ '?sortField='+${sortField}+'&sortType=' + ${sortType}}"
+			      class="pagination-link">Last</a>
+			    <span th:unless="${currentPage < totalPages}" class="pagination-link-disabled">Last</span>
+			  </div>
+			</div>
+				</div>
 </body>
 <script type="text/javascript">
 	function clearSearch() {
