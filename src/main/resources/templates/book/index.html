@@ -18,14 +18,16 @@ body {
   background-color: #ccc;
   backdrop-filter: blur(5px) brightness(1.0);
 }
-.main-search-input-wrap {
-  margin-bottom: 20px;
+/* CSS cho khung chứa bảng */
+.container {
+  margin-top: 20px;
 }
 
-.main-search-input {
+/* CSS cho khung tìm kiếm */
+.main-search-input-wrap {
+  margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
 }
 
 .main-search-input-item {
@@ -46,70 +48,18 @@ body {
   padding: 8px 20px;
   border: none;
   cursor: pointer;
-  
 }
-.pagination-outer {
+
+/* CSS cho bảng */
+.table {
+  margin-top: 20px;
   text-align: center;
 }
 
-.pagination {
-  display: inline-block;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.table th {
+  text-align: center;
 }
 
-.pagination li {
-  display: inline-block;
-  margin-right: 5px;
-}
-
-.pagination li a {
-  display: inline-block;
-  padding: 5px 10px;
-  background-color: #f2f2f2;
-  color: #333;
-  text-decoration: none;
-  border-radius: 3px;
-  transition: background-color 0.3s ease;
-}
-
-.pagination li.active a {
-  background-color: #666;
-  color: #fff;
-}
-
-.pagination li a:hover {
-  background-color: #ddd;
-}
-
-.pagination li span {
-  display: inline-block;
-  padding: 5px 10px;
-  background-color: #f2f2f2;
-  color: #666;
-  border-radius: 3px;
-}
-
-h5 {
-  margin-top: 10px;
-  color: #333;
-}
-
-h5, a, span, th{
-  font-size: 20px;
-}
-.table-icons a {
-  color: #999;
-  margin-right: 5px;
-  text-decoration: none;
-}
-
-.table-icons a:hover {
-  color: #333;
-}
-
-/* Animation Effects */
 .table tr {
   opacity: 0;
   animation: fadeIn 0.5s forwards;
@@ -125,6 +75,20 @@ h5, a, span, th{
     transform: translateY(0);
   }
 }
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.image-container img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+/* CSS cho phân trang */
 .pagination {
   display: flex;
   justify-content: center;
@@ -148,7 +112,7 @@ h5, a, span, th{
 }
 
 .pagination-link:hover {
-  color: #f00; /* Change to your desired hover color */
+  color: #f00; /* Thay đổi thành màu hover mong muốn */
   text-decoration: underline;
   cursor: pointer;
 }
@@ -157,15 +121,14 @@ h5, a, span, th{
   color: #888;
   cursor: not-allowed;
 }
-.image-container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
+
+h5 {
+  margin-top: 10px;
+  color: #333;
 }
-.image-container img {
-	max-width: 100px; /* Adjust the max-width as per your preference */
-	max-height: 100px; /* Adjust the max-height as per your preference */
+
+h5, a, span, th {
+  font-size: 20px;
 }
 </style>
 
