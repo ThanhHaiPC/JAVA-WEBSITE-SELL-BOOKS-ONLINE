@@ -10,14 +10,55 @@
 <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 <script type="text/javascript"
 	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<<<<<<< HEAD
 
+=======
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<style>
+body {
+  background-image: url("https://media.istockphoto.com/id/1203011577/vector/newspaper-with-old-grunge-vintage-unreadable-paper-texture-background.jpg?s=2048x2048&w=is&k=20&c=bw_YpfdvRcApDJvPonO0452tER4rarC-mfMoBuKho_E=");
+  background-color: #ccc;
+  backdrop-filter: blur(5px) brightness(1.0);
+}
+.table-icons a {
+  color: #999;
+  margin-right: 5px;
+  text-decoration: none;
+}
+
+.table-icons a:hover {
+  color: #333;
+}
+
+/* Animation Effects */
+.table tr {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+>>>>>>> 6679f20 (sua checkout)
 </head>
 <body>
 	<header th:insert="layout/fragment.html :: header"> </header>
 	<div align="center" class="container">
 		<h1>User List</h1>
 		<div sec:authorize="hasAnyAuthority('ADMIN')">
+<<<<<<< HEAD
 			<a href="/users/new">Create New User</a>
+=======
+			<a class="btn btn-primary" href="/users/new">Create New User</a>
+>>>>>>> 6679f20 (sua checkout)
 		</div>
 		<br /> <br />
 		<table border="1" class="table table table-hover table-bordered">
@@ -47,10 +88,17 @@
 					</td>
 					<td>
 						<div sec:authorize="hasAnyAuthority('ADMIN')">
+<<<<<<< HEAD
 							<a th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
 						</div>
 						<div sec:authorize="hasAuthority('ADMIN')">
 							<a th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
+=======
+							<a th:href="@{'/users/edit/' + ${user.id}}"><i class="fa fa-pen"></i></a>
+						</div>
+						<div sec:authorize="hasAuthority('ADMIN')">
+							<a th:href="@{'/users/delete/' + ${user.id}}"><i class="fa fa-trash"></i></a>
+>>>>>>> 6679f20 (sua checkout)
 						</div>
 					</td>
 				</tr>
