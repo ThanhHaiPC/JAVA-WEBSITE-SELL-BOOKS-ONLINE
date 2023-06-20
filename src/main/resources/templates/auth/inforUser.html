@@ -1,0 +1,61 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<link href="/src/main/resources/templates/auth/inforUser.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="/src/main/resources/templates/auth/inforUser.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div style="margin-top: 100px" class="container">
+    <div class="row">
+        <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+
+
+
+            <br>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 style="text-align:center" class="panel-title" th:text="${USERNAME}"></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"><img class="img-circle img-responsive" th:src="@{${PHOTO}}" /> </div>
+						
+
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+
+
+                                    <tr>
+                                        <td>ID</td>
+                                        <td th:text="${ID}"></td>
+                                    </tr>
+
+                                    <tr>
+                                 
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><a href="${EMAIL}" th:text="${EMAIL}"></a></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                     <a style="float:right" href="https://localhost:44339/Manage/ChangePassword" class="btn btn-primary">Đổi mật khẩu</a>
+                            
+                        </div>
+                    </div>
+                </div>  
+                 <div class="panel-footer" >
+                <a style="margin-left:310px;margin-right: 10px" data-original-title="Broadcast Message" data-toggle="tooltip" th:href="@{'/users/edit/' + ${ID}}" class="btn btn-sm btn-primary">Thay đổi thông tin</a>
+                <a style="position: absolute;" data-original-title="Broadcast Message" data-toggle="tooltip" href="/" class="btn btn-sm btn-primary">Back to Home</a>               
+                 </div>        
+
+            </div>
+        </div>
+    </div>
+</div>
