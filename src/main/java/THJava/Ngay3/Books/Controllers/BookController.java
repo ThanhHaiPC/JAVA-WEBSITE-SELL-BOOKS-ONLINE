@@ -43,7 +43,7 @@ import java.text.SimpleDateFormat;
 
 @Controller
 @RequestMapping("books")
-//afsdf
+
 public class BookController {
 	@Autowired
 	private BookServices bookServices;
