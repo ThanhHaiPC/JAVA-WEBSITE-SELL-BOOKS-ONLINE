@@ -197,5 +197,38 @@ public class AuthController {
 
 		return "auth/change_password_form";
 	}
-	
+	@GetMapping("/edit/{id}")
+	public String showEditUserPage(@PathVariable("id") Long id, Model model) {
+		User user = userService.get(id);
+		
+		if(user == null) {
+			return "notfound";
+		} else {
+			model.addAttribute("user", user);
+			model.addAttribute("roles", roleService.listAll());
+			return "auth/edit";
+		}
+	}
+	@PostMapping("/saveEdit")
+	public String saveUser(@ModelAttribute("user") User user, @RequestParam("image")  MultipartFile  multipartFile) 
+			throws IOException{
+		
+		if (user.getPassword().isEmpty()) {
+			user.setPassword(userService.get(user.getId()).getPassword());
+		}else {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+		}
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		user.setPhotourl(fileName);
+        user.setEnabled(true);
+        User saveUser = userService.save(user);
+        if (!multipartFile.getOriginalFilename().isBlank())
+        {
+            String uploadDir = "photos/" + saveUser.getId();
+            FileUploadUtil.saveFile(uploadDir,fileName,multipartFile);
+        }
+        userService.save(user);
+		
+		return "redirect:/account";
+	}
 }
